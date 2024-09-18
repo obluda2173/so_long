@@ -6,7 +6,7 @@
 /*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 15:58:26 by erian             #+#    #+#             */
-/*   Updated: 2024/09/17 12:22:10 by erian            ###   ########.fr       */
+/*   Updated: 2024/09/18 17:04:01 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,19 @@ static void	count_checker(t_complete *game, int height, int width)
 		&& game->map[height][width] != 'C'
 		&& game->map[height][width] != '\n')
 	{
-		ft_printf("\nError is here: %c\n", game->map[height][width]);
+		ft_printf("Error\nInvalid character: %c\n", game->map[height][width]);
 		exit(0);
 	}
 	if (game->map[height][width] == 'P')
-		game->playercount++;
-	if (game->map[height][width] == 'C')
-		game->collectable_init++;
-	if (game->map[height][width] == 'E')
 	{
-		game->exitcount++;
+		game->playercount++;
 		game->y_axis = height;
 		game->x_axis = width;
 	}
+	if (game->map[height][width] == 'C')
+		game->collectable_init++;
+	if (game->map[height][width] == 'E')
+		game->exitcount++;
 }
 
 static void	character(t_complete *game)
@@ -76,10 +76,9 @@ static void	character(t_complete *game)
 		height++;
 	}
 	if (!(game->playercount == 1
-			&& game->exitcount == 1
-			&& game->collectable_init >= 1))
+			&& game->exitcount == 1 && game->collectable_init >= 1))
 	{
-		ft_printf("Error\nInvalid map 1\n");
+		ft_printf("Error\nInvalid map\n");
 		exit_point(game);
 	}
 }
@@ -91,7 +90,10 @@ static void	flood_fill(t_complete *game, char **temp_map, int x, int y)
 	if (temp_map[y][x] == '1')
 		return ;
 	if (temp_map[y][x] == 'E')
+	{
 		game->exitcount = 2;
+		return ;
+	}
 	else if (temp_map[y][x] == 'C')
 		game->collectables++;
 	temp_map[y][x] = '1';
@@ -124,7 +126,7 @@ void	check_errors(t_complete *game)
 	free(temp_map);
 	if (!(game->collectable_init == game->collectables && game->exitcount == 2))
 	{
-		ft_printf("Error\nInvalid map 2\n");
+		ft_printf("Error\nInvalid map\n");
 		exit_point(game);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:26:58 by erian             #+#    #+#             */
-/*   Updated: 2024/09/17 11:12:28 by erian            ###   ########.fr       */
+/*   Updated: 2024/09/18 14:54:32 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	map_reading(t_complete *game, char **argv)
 	if (game->fd < 0)
 		return (0);
 	readmap = get_next_line(game->fd);
+	if (!readmap)
+	{
+		ft_printf("Error\nInvalid map 1\n");
+		exit_point(game);
+	}
 	while (readmap != NULL)
 	{
 		if (!add_line(game, readmap))

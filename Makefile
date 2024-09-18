@@ -48,7 +48,7 @@ fclean:		clean
 			@make --no-print-directory -sC Libft fclean
 			@make --no-print-directory -sC ft_printf fclean
 			@make --no-print-directory -sC get_next_line fclean
-			@make --no-print-directory -sC minilibx fclean
+			@make --no-print-directory -sC minilibx clean
 			$(S_NAME)
 
 re:			fclean all

@@ -6,7 +6,7 @@
 /*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 13:32:27 by erian             #+#    #+#             */
-/*   Updated: 2024/09/17 13:26:23 by erian            ###   ########.fr       */
+/*   Updated: 2024/09/18 17:09:15 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ int	main(int argc, char **argv)
 	map_reading(&game, argv);
 	check_errors(&game);
 	game.mlxpointer = mlx_init();
-	game.winpointer = mlx_new_window(game.mlxpointer, game.widthmap * 50, game.heightmap * 50, "so_long");
+	game.winpointer = mlx_new_window(game.mlxpointer,
+			game.widthmap * 50, game.heightmap * 50, "so_long");
 	place_images_in_game(&game);
+	adding_in_graphics(&game);
+	mlx_key_hook(game.winpointer, controls, &game);
+	mlx_hook(game.winpointer, 17, 0, (void *)exit, 0);
+	mlx_loop(game.mlxpointer);
 	return (0);
 }
