@@ -6,7 +6,7 @@
 /*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 20:55:38 by erian             #+#    #+#             */
-/*   Updated: 2024/09/18 13:52:56 by erian            ###   ########.fr       */
+/*   Updated: 2024/09/18 18:07:18 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	right_move(t_complete *game, int i, int j)
 	}
 	return (1);
 }
-
 
 static int	keyboard_w_s(t_complete *game, int movement)
 {
@@ -108,14 +107,14 @@ int	controls(int command, t_complete *game)
 		works = keyboard_w_s(game, command);
 		if (works)
 			ft_printf("Steps Taken: %i\nCollectables Left: %i\n",
-			game->counter, game->collectables);
+				game->counter, game->collectables);
 	}
 	else if (command == KEY_A || command == KEY_D)
 	{
 		works = keyboard_a_d(game, command);
 		if (works)
 			ft_printf("Steps Taken: %i\nCollectables Left: %i\n",
-			game->counter, game->collectables);
+				game->counter, game->collectables);
 	}
 	if (works)
 		adding_in_graphics(game);
