@@ -1,4 +1,6 @@
-SRCS		=	$(wildcard src/*.c)
+NAME		=	so_long
+
+SRCS		=	
 
 LIBS		=	get_next_line/gnl.a Libft/libft.a ft_printf/libftprintf.a minilibx/libmlx.a
 
@@ -9,6 +11,12 @@ RM			=	@rm -f
 CCFLAGS		=	-Wall -Werror -Wextra -Iinclude/mlx
 MLXFLAGS	=	-framework OpenGL -framework Appkit
 
+SRCS		+=	src/error.c
+SRCS		+=	src/graphics.c
+SRCS		+=	src/movement.c
+SRCS		+=	src/parse.c
+SRCS		+=	src/so_long.c
+
 BLUE		=	\033[0;94m
 RED			=	\033[0;91m
 GREEN		=	\033[0;92m
@@ -16,11 +24,10 @@ YELLOW		=	\033[0;33m
 CYAN		=	\033[0;96m
 COLOR		=	\033[0m
 
-SUCCESS		=	@echo "$(YELLOW)so_long compiled successfully$(COLOR)"
-S_OBJS		=	@echo "$(BLUE)cleaning of objects completed <(￣︶￣)>$(COLOR)"
-S_NAME		=	@echo "$(CYAN)full clean completed ! ヽ(・∀・)ﾉ$(COLOR)"
+SUCCESS		=	@echo "$(YELLOW)so_long compiled successfully.$(COLOR)"
+S_OBJS		=	@echo "$(BLUE)cleaning of objects completed.$(COLOR)"
+S_NAME		=	@echo "$(CYAN)full clean completed.$(COLOR)"
 
-NAME		=	so_long
 
 %.o:		%.c
 			$(CC) $(CCFLAGS) -c $< -o $@
@@ -28,7 +35,7 @@ NAME		=	so_long
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@make -sC libft
+			@make -sC Libft
 			@make -sC ft_printf
 			@make -sC get_next_line
 			@make -sC minilibx
