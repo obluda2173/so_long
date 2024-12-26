@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
+/*   By: erian <erian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 15:58:26 by erian             #+#    #+#             */
-/*   Updated: 2024/09/18 17:04:01 by erian            ###   ########.fr       */
+/*   Updated: 2024/12/10 18:23:02 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int	walls(t_complete *game)
 	return (1);
 }
 
-static void	count_checker(t_complete *game, int height, int width)
+static void	count_checker(t_complete *game, char **temp_map,
+							int height, int width)
 {
 	if (game->map[height][width] != '1'
 		&& game->map[height][width] != '0'
@@ -45,7 +46,7 @@ static void	count_checker(t_complete *game, int height, int width)
 		&& game->map[height][width] != '\n')
 	{
 		ft_printf("Error\nInvalid character: %c\n", game->map[height][width]);
-		exit(0);
+		exit_point_with_cleanup(game, temp_map);
 	}
 	if (game->map[height][width] == 'P')
 	{
@@ -59,7 +60,7 @@ static void	count_checker(t_complete *game, int height, int width)
 		game->exitcount++;
 }
 
-static void	character(t_complete *game)
+static void	character(t_complete *game, char **temp_map)
 {
 	int	height;
 	int	width;
@@ -70,7 +71,7 @@ static void	character(t_complete *game)
 		width = 0;
 		while (width < game->widthmap)
 		{
-			count_checker(game, height, width);
+			count_checker(game, temp_map, height, width);
 			width++;
 		}
 		height++;
@@ -79,7 +80,7 @@ static void	character(t_complete *game)
 			&& game->exitcount == 1 && game->collectable_init >= 1))
 	{
 		ft_printf("Error\nInvalid map\n");
-		exit_point(game);
+		exit_point_with_cleanup(game, temp_map);
 	}
 }
 
@@ -115,9 +116,9 @@ void	check_errors(t_complete *game)
 	if (!walls(game))
 	{
 		ft_printf("Error\nThis map is missing the walls\n");
-		exit_point(game);
+		exit_point_with_cleanup(game, temp_map);
 	}
-	character(game);
+	character(game, temp_map);
 	x = game->x_axis;
 	y = game->y_axis;
 	flood_fill(game, temp_map, x, y);
@@ -127,6 +128,6 @@ void	check_errors(t_complete *game)
 	if (!(game->collectable_init == game->collectables && game->exitcount == 2))
 	{
 		ft_printf("Error\nInvalid map\n");
-		exit_point(game);
+		exit_point_with_cleanup(game, NULL);
 	}
 }

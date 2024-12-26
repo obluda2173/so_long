@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erian <erian@student.42>                   +#+  +:+       +#+        */
+/*   By: erian <erian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:26:58 by erian             #+#    #+#             */
-/*   Updated: 2024/09/18 14:54:32 by erian            ###   ########.fr       */
+/*   Updated: 2024/12/10 18:23:29 by erian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static int	add_line(t_complete *game, char *line)
 	i = 0;
 	game->heightmap++;
 	temp = (char **)malloc(sizeof(char *) * (game->heightmap + 1));
+	if (!temp)
+	{
+		free(line);
+		return (0);
+	}
 	temp[game->heightmap] = NULL;
 	while (i < game->heightmap - 1)
 	{
@@ -57,13 +62,16 @@ int	map_reading(t_complete *game, char **argv)
 	readmap = get_next_line(game->fd);
 	if (!readmap)
 	{
-		ft_printf("Error\nInvalid map 1\n");
+		ft_printf("Error\nInvalid map\n");
 		exit_point(game);
 	}
 	while (readmap != NULL)
 	{
 		if (!add_line(game, readmap))
-			break ;
+		{
+			ft_printf("Error\nMemory allocation failed\n");
+			exit_point(game);
+		}
 		readmap = get_next_line(game->fd);
 	}
 	close(game->fd);
